@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>jokenpô</title>
+	<link rel="stylesheet" type="text/css" href="css/estilo.css">
+</head>
+<body>
+	<div class="container">
+		<div class="cabecario">
+			<img src="logo.png" id="logo" width="200" height="200">
+		</div>
+
+		<div class="corpo">
+
+				
+			<div class="placar">
+				<div class="jogador">
+					<h2 class="jogador-nome">Jogador</h2>
+					<h3 id="jogadorVPartida"></h3>
+					<span id="jogador-pontos"></span>
+					<ul id="jogador-escolha">
+						<li><img class="joga" onclick="jogar(1)" src="pedra.png" width="100" height="100"></li>
+						<li><img class="joga" onclick="jogar(2)"src="tesoura.png" width="100" height="100"></li>
+						<li><img class="joga" onclick="jogar(3)"src="papel.png" width="100" height="100"></li>	
+					</ul>
+				</div>
+				<div class="vs">
+					<h3>Vs</h3>
+				</div>
+				<div class="cpu">
+					<h2 class="cpu-nome">CPU</h2>
+					<h3 id="cpuVPartida"></h3>
+					<span id="cpu-pontos"></span>
+					<ul class="cpu-escolha">
+						<li><img id="cpuImg" width="100" height="100"></li>	
+					</ul>
+				</div> 	
+			</div>
+		</div>
+		<div id="mensagens"></div>
+	</div>
+	
+
+	<script>
+		//User(1) - CPU(2) = -1
+		//User(1) - CPU(3) = -2
+		//User(2) - CPU(1) =  1
+		//User(2) - CPU(3) = -1
+		//User(3) - CPU(1) =  2
+		//User(3) - CPU(2) =  1
+		
+
+		var jogadorEscolha = 0;
+		var jogadorPontuacao = 0;
+		var JogadorPGanhas = 0;
+		var computadorEscolha = 0;
+		var computadorPontuacao = 0;
+		var computadorPGanhas = 0;
+
+		function jogar(escolha) {	
+			jogadorEscolha = escolha;
+			computadorEscolha = Math.floor((Math.random() * (3 - 1 + 1))) +1;
+			
+			if (jogadorEscolha == computadorEscolha) {
+				document.getElementById('mensagens').innerHTML = 'Empate!';
+			}
+			else if ((jogadorEscolha - computadorEscolha) ==-1 || (jogadorEscolha - computadorEscolha) == 2 ) {
+				document.getElementById('mensagens').innerHTML = 'Jogador vencedor!';
+			}
+			else{
+				document.getElementById('mensagens').innerHTML = 'Computador vencedor!';
+			}
+			optComputador(computadorEscolha);
+			somaPonto();
+			vencedorPartida();
+		}
+		
+		function optComputador(escolha){
+			computadorEscolha = escolha;
+			if (computadorEscolha == 1) {
+				document.getElementById('cpuImg').src = "pedra.png";
+			}else if (computadorEscolha == 2) {
+				document.getElementById('cpuImg').src = "tesoura.png";
+			}else if (computadorEscolha == 3) {}{
+				document.getElementById('cpuImg').src = "papel.png";
+			}
+		}
+
+		function somaPonto() {
+			if (jogadorEscolha == computadorEscolha) {
+
+			}else if ((jogadorEscolha - computadorEscolha) ==-1 || (jogadorEscolha - computadorEscolha) == 2 ) {
+				document.getElementById('jogador-pontos').innerHTML = jogadorPontuacao++;
+			}
+			else{
+				document.getElementById('cpu-pontos').innerHTML = computadorPontuacao++;	
+			}
+		}
+		function vencedorPartida() {
+			if (jogadorPontuacao == 4) {
+				document.getElementById('mensagens').innerHTML = "Jogador vencedor da partida!";
+				document.getElementById('jogadorVPartida').innerHTML = JogadorPGanhas++;
+				document.getElementById('jogador-pontos').innerHTML = jogadorPontuacao = 0;
+				if (computadorPontuacao <= 4) {
+					document.getElementById('cpu-pontos').innerHTML = computadorPontuacao = 0;
+				}
+			}else if(computadorPontuacao == 4){
+				document.getElementById('mensagens').innerHTML = "Computador vencedor da partida!";
+				document.getElementById('cpuVPartida').innerHTML = computadorPGanhas++;	
+				document.getElementById('cpu-pontos').innerHTML = computadorPontuacao = 0;
+				if (jogadorPontuacao <= 4) {
+					document.getElementById('jogador-pontos').innerHTML = jogadorPontuacao =0;
+				}	
+			}
+		}
+	</script>
+</body>
+</html>
